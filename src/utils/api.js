@@ -17,8 +17,6 @@ export const fetchDataFromAPI = async (url, params) => {
     });
     return data;
   } catch (error) {
-    console.log(TMDB_TOKEN);
-    console.log(process.env.API_URL);
     return error;
   }
 };
