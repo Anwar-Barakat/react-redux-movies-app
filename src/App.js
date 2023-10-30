@@ -17,11 +17,16 @@ import {
 function App() {
   const dispatch = useDispatch();
   const { url } = useSelector((state) => state.home);
-
   const apiTest = () => {
-    fetchDataFromAPI("/movie/popular").then((result) =>
-      dispatch(getApiConfiguration(result))
-    );
+    fetchDataFromAPI("/configuration").then((result) => {
+      console.log(result);
+      const url = {
+        backdrop: `${result.images.secure_base_url}original`,
+        poster: `${result.images.secure_base_url}original`,
+        profile: `${result.images.secure_base_url}original`,
+      };
+      dispatch(getApiConfiguration(url));
+    });
   };
 
   useEffect(() => {
