@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { fetchDataFromAPI } from "./utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import { getApiConfiguration } from "./store/slices/homeSlice";
@@ -17,9 +17,8 @@ import {
 function App() {
   const dispatch = useDispatch();
   const { url } = useSelector((state) => state.home);
-  const apiTest = () => {
+  const apiTest = useCallback(() => {
     fetchDataFromAPI("/configuration").then((result) => {
-      console.log(result);
       const url = {
         backdrop: `${result.images.secure_base_url}original`,
         poster: `${result.images.secure_base_url}original`,
@@ -27,11 +26,11 @@ function App() {
       };
       dispatch(getApiConfiguration(url));
     });
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     apiTest();
-  }, []);
+  }, [apiTest]);
 
   return (
     <div className="App">
