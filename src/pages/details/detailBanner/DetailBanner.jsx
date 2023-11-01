@@ -38,7 +38,7 @@ const DetailBanner = ({ video, crew }) => {
   console.log(director, writer);
 
   return (
-    <div className="detailsBanner">
+    <section className="detailsBanner">
       {!loading ? (
         <>
           {!!data && (
@@ -182,7 +182,7 @@ const DetailBanner = ({ video, crew }) => {
           </ContentWrapper>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 
