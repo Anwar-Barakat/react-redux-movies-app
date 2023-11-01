@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import "./style.scss";
 
 import {
   BsFillArrowLeftCircleFill,
@@ -14,12 +13,27 @@ import Img from "../lazyLoadingImage/Img";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 import CircleRating from "../circleRating/CircleRating";
 
+import "./style.scss";
+import Genres from "../genres/Genres";
+
 const Carousel = ({ data, loading }) => {
   const carouselContainer = useRef();
   const { url } = useSelector((state) => state.home);
   const navigate = useNavigate();
 
   const navigation = (direction) => {};
+
+  const skeletonItem = () => {
+    return (
+      <div className="skeletonItem">
+        <div className="posterBlock"></div>
+        <div className="textBlock">
+          <div className="title"></div>
+          <div className="date"></div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <section className="carousel">
@@ -44,6 +58,7 @@ const Carousel = ({ data, loading }) => {
                   <div className="posterBlock">
                     <Img src={posterURL} alt={element.original_title} />
                     <CircleRating rating={element.vote_average.toFixed(1)} />
+                    <Genres data={element.genre_ids.slice(0, 2)} />
                   </div>
                   <div className="textBlock">
                     <span className="title">
@@ -58,7 +73,13 @@ const Carousel = ({ data, loading }) => {
             })}
           </div>
         ) : (
-          <h1>Loading...</h1>
+          <div className="loadingSkeleton">
+            {skeletonItem()}
+            {skeletonItem()}
+            {skeletonItem()}
+            {skeletonItem()}
+            {skeletonItem()}
+          </div>
         )}
       </ContentWrapper>
     </section>
