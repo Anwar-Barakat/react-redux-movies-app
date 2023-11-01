@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import ContentWrapper from "../../../components/ContentWrapper/ContentWrapper";
-import "./style.scss";
 import SwitchTabs from "../../../components/switchTabs/SwitchTabs";
 import useFetch from "../../../hooks/useFetch";
 import Carousel from "../../../components/carousel/Carousel";
+import "../carouselStyle.scss";
 
 const Trending = () => {
   const [endpoint, setEndpoint] = useState("day");
