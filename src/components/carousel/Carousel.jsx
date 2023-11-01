@@ -12,9 +12,9 @@ import PosterFallback from "../../assets/no-poster.png";
 import Img from "../lazyLoadingImage/Img";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 import CircleRating from "../circleRating/CircleRating";
+import Genres from "../genres/Genres";
 
 import "./style.scss";
-import Genres from "../genres/Genres";
 
 const Carousel = ({ data, loading, endpoint }) => {
   const carouselContainer = useRef();
@@ -63,7 +63,6 @@ const Carousel = ({ data, loading, endpoint }) => {
               const posterURL = element.poster_path
                 ? url.poster + element.poster_path
                 : PosterFallback;
-              console.log(element);
               return (
                 <div
                   key={element.id}
