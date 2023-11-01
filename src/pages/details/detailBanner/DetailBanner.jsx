@@ -12,9 +12,13 @@ import ContentWrapper from "../../../components/ContentWrapper/ContentWrapper";
 
 import "./style.scss";
 import { PlayerBtn } from "../PlayerBtn";
+import VideoPopup from "../../../components/videoPopup/VideoPopup";
 
 const DetailBanner = ({ video, crew }) => {
   const { url } = useSelector((state) => state.home);
+
+  const [show, setShow] = useState(false);
+  const [videoId, setVideoId] = useState(null);
 
   const { mediaType, id } = useParams();
   const { data, loading } = useFetch(`/${mediaType}/${id}`);
@@ -65,7 +69,13 @@ const DetailBanner = ({ video, crew }) => {
                     <Genres data={movieGenre} />
                     <div className="row">
                       <CircleRating rating={data.vote_average.toFixed(1)} />
-                      <div className="playbtn">
+                      <div
+                        className="playbtn"
+                        onClick={() => {
+                          setShow(true);
+                          setVideoId(video.key);
+                        }}
+                      >
                         <PlayerBtn />
                         <span className="text">Watch Trailer</span>
                       </div>
@@ -146,6 +156,13 @@ const DetailBanner = ({ video, crew }) => {
                   </div>
                 </div>
               </ContentWrapper>
+
+              <VideoPopup
+                show={show}
+                setShow={setShow}
+                videoId={videoId}
+                setVideoId={setVideoId}
+              />
             </React.Fragment>
           )}
         </>
