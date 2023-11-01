@@ -35,7 +35,6 @@ const DetailBanner = ({ video, crew }) => {
     (item) =>
       item.job === "Writer" || item.job === "Story" || item.job === "Screenplay"
   );
-  console.log(director, writer);
 
   return (
     <section className="detailsBanner">
