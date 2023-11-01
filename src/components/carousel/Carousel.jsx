@@ -16,20 +16,31 @@ import CircleRating from "../circleRating/CircleRating";
 import "./style.scss";
 import Genres from "../genres/Genres";
 
-const Carousel = ({ data, loading }) => {
+const Carousel = ({ data, loading, endpoint }) => {
   const carouselContainer = useRef();
   const { url } = useSelector((state) => state.home);
   const navigate = useNavigate();
 
-  const navigation = (direction) => {};
+  const navigation = (direction) => {
+    const container = carouselContainer.current;
+    const scrollAmount =
+      direction === "left"
+        ? container.scrollLeft - (container.offsetWidth + 20)
+        : container.scrollLeft + (container.offsetWidth + 20);
 
-  const skeletonItem = () => {
+    container.scrollTo({
+      left: scrollAmount,
+      behavior: "smooth",
+    });
+  };
+
+  const skItem = () => {
     return (
       <div className="skeletonItem">
-        <div className="posterBlock"></div>
+        <div className="posterBlock skeleton"></div>
         <div className="textBlock">
-          <div className="title"></div>
-          <div className="date"></div>
+          <div className="title skeleton"></div>
+          <div className="date skeleton"></div>
         </div>
       </div>
     );
@@ -47,14 +58,22 @@ const Carousel = ({ data, loading }) => {
           onClick={() => navigation("right")}
         />
         {!loading ? (
-          <div className="carouselItems">
+          <div className="carouselItems" ref={carouselContainer}>
             {data?.map((element) => {
               const posterURL = element.poster_path
                 ? url.poster + element.poster_path
                 : PosterFallback;
               console.log(element);
               return (
-                <div key={element.id} className="carouselItem">
+                <div
+                  key={element.id}
+                  className="carouselItem"
+                  onClick={() => {
+                    navigate(
+                      `/${element.media_type || endpoint}/${element.id}`
+                    );
+                  }}
+                >
                   <div className="posterBlock">
                     <Img src={posterURL} alt={element.original_title} />
                     <CircleRating rating={element.vote_average.toFixed(1)} />
@@ -74,11 +93,11 @@ const Carousel = ({ data, loading }) => {
           </div>
         ) : (
           <div className="loadingSkeleton">
-            {skeletonItem()}
-            {skeletonItem()}
-            {skeletonItem()}
-            {skeletonItem()}
-            {skeletonItem()}
+            {skItem()}
+            {skItem()}
+            {skItem()}
+            {skItem()}
+            {skItem()}
           </div>
         )}
       </ContentWrapper>
