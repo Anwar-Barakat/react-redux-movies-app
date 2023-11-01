@@ -26,6 +26,12 @@ const DetailBanner = ({ video, crew }) => {
   };
 
   const movieGenre = data?.genres.map((ele) => ele.id);
+  const director = crew?.filter((item) => item.job === "Director");
+  const writer = crew?.filter(
+    (item) =>
+      item.job === "Writer" || item.job === "Story" || item.job === "Screenplay"
+  );
+  console.log(director, writer);
 
   return (
     <div className="detailsBanner">
@@ -50,6 +56,7 @@ const DetailBanner = ({ video, crew }) => {
                     )}
                   </div>
                   <div className="right">
+                    {/* Movie, TV Show Main Info */}
                     <div className="title">
                       {`${data.name || data.title}`} (
                       {dayjs(data?.release_date).format("YYYY")})
@@ -91,6 +98,51 @@ const DetailBanner = ({ video, crew }) => {
                         </div>
                       )}
                     </div>
+
+                    {/* Display Directors */}
+                    {director?.length > 0 && (
+                      <div className="info">
+                        <span className="text bold">
+                          Director :{" "}
+                          {director?.map((ele, index) => (
+                            <span className="text" key={index}>
+                              {ele.name}
+                              {director.length - 1 !== index && ", "}
+                            </span>
+                          ))}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Display Writer */}
+                    {writer?.length > 0 && (
+                      <div className="info">
+                        <span className="text bold">
+                          Writer :{" "}
+                          {writer?.map((ele, index) => (
+                            <span className="text" key={index}>
+                              {ele.name}
+                              {writer.length - 1 !== index && ", "}
+                            </span>
+                          ))}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Display Creators */}
+                    {data?.created_by?.length > 0 && (
+                      <div className="info">
+                        <span className="text bold">
+                          Creator:{" "}
+                          {data?.created_by?.map((ele, index) => (
+                            <span className="text" key={index}>
+                              {ele.name}
+                              {data?.created_by.length - 1 !== index && ", "}
+                            </span>
+                          ))}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </ContentWrapper>

@@ -53,7 +53,9 @@
         display: block;
         border-radius: 12px;
         @include md {
-          max-width: 350px;
+          max-width: 360px;
+          min-height: 500px;
+          object-fit: cover;
         }
       }
     }
