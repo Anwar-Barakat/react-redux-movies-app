@@ -7,13 +7,12 @@ import Img from "../../../components/lazyLoadingImage/Img";
 import ContentWrapper from "../../../components/ContentWrapper/ContentWrapper";
 
 const HeroBanner = () => {
+  const { url } = useSelector((state) => state.home);
+  const { data, loading } = useFetch(`/movie/upcoming`);
+
   const [background, setBackground] = useState("");
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
-
-  const { url } = useSelector((state) => state.home);
-
-  const { data, loading } = useFetch(`/movie/upcoming`);
 
   useEffect(() => {
     const bg =

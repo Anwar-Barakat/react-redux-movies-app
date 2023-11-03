@@ -19,6 +19,7 @@ function App() {
   const { url } = useSelector((state) => state.home);
   const apiTest = useCallback(() => {
     fetchDataFromAPI("/configuration").then((result) => {
+      console.log(result.images);
       const url = {
         backdrop: `${result.images.secure_base_url}original`,
         poster: `${result.images.secure_base_url}original`,
@@ -28,7 +29,7 @@ function App() {
     });
   }, [dispatch]);
 
-  const genresCall = async () => {
+  const genresCall = useCallback(async () => {
     let promises = [];
     let endpoints = ["tv", "movie"];
     let allGenres = {};
@@ -41,13 +42,14 @@ function App() {
     data.map(({ genres }) => {
       return genres.map((genre) => (allGenres[genre.id] = genre));
     });
+
     dispatch(getGenres(allGenres));
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     apiTest();
     genresCall();
-  }, [apiTest]);
+  }, [apiTest, genresCall]);
 
   return (
     <div className="App">
